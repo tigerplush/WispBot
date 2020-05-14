@@ -1,0 +1,9 @@
+{
+    "prefix": "!wisp ",
+    "databasePath": "databases",
+    "giveawayDatabase": "giveaways.db",
+    "enteredUsersDatabase": "enteredusers.db",
+    "waitingTimeString": "00:03:00",
+    "defaultReactEmoji": "🎉",
+    "customReactEmoji": "wisp"
+}

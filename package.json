@@ -1,0 +1,26 @@
+{
+  "name": "wisp",
+  "version": "1.0.0",
+  "description": "This is an animal crossing themed giveaway bot",
+  "main": "wisp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tigerplush/WispBot.git"
+  },
+  "author": "Christopher 'Tiger' Putz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tigerplush/WispBot/issues"
+  },
+  "homepage": "https://github.com/tigerplush/WispBot#readme",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "moment": "^2.25.3",
+    "nedb": "^1.8.0",
+    "node-cron": "^2.0.3",
+    "path": "^0.12.7"
+  }
+}
