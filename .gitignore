@@ -1,0 +1,5 @@
+auth.json
+config.json
+*.db
+
+[Nn]ode_modules/
