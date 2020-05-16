@@ -41,7 +41,11 @@ module.exports =
         giveaway.ownerId = message.author.id;
         giveaway.channelId = message.channel.id;
 
-        message.author.createDM()
+        message.reply("I'm going to dm you to collect some more information I need")
+        .then(() =>
+            {
+                return message.author.createDM();
+            })
         .then(channel =>
             {
                 dmChannel = channel;
