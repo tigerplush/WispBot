@@ -46,79 +46,82 @@ class Giveaway
 
                 if(winners.length > 0)
                 {
-                    this.winners(giveaway, winners);
+                    return this.winners(giveaway, winners);
                 }
                 else
                 {
-                    this.noWinners(giveaway);
+                    return this.noWinners(giveaway);
                 }
+            })
+        .then(message =>
+            {
+            })
+        .then(() =>
+            {
+                return giveawayDb.remove(giveaway);
+            })
+        .then(() =>
+            {
+                return enteredUsersDb.removeAll({giveawayId: giveaway._id});
             })
         .catch(err => console.log(err));
     }
 
     winners(giveaway, winners)
     {
-        let giveawayChannel;
-        this.channelManager.fetch(giveaway.channelId)
-        .then(channel =>
-            {
-                giveawayChannel = channel;
-                return channel.messages.fetch(giveaway.messageId);
-            })
-        .then(message =>
-            {
-                let messageContent = `<@${giveaway.ownerId}>s giveaway for ${giveaway.price} has ended!`
-                return message.edit(messageContent);
-            })
-        .then(() =>
-            {
-                let have = "have";
-                if(winners.length === 1)
+        return new Promise((resolve, reject) =>
+        {
+            let giveawayChannel;
+            this.channelManager.fetch(giveaway.channelId)
+            .then(channel =>
                 {
-                    have = "has";
-                }
-                let messageContent = `<@${winners.map(winner => winner.userId).join('>, <@')}> ${have} won <@${giveaway.ownerId}>s giveaway for ${giveaway.price}`;
-                return giveawayChannel.send(messageContent);
-            })
-        .then(() =>
-            {
-                return giveawayDb.remove(giveaway);
-            })
-        .then(() =>
-            {
-                return enteredUsersDb.removeAll({giveawayId: giveaway._id});
-            })
-        .catch(err => console.log(err));
+                    giveawayChannel = channel;
+                    let have = "have";
+                    if(winners.length === 1)
+                    {
+                        have = "has";
+                    }
+                    let messageContent = `<@${winners.map(winner => winner.userId).join('>, <@')}> ${have} won <@${giveaway.ownerId}>s giveaway for ${giveaway.price}`;
+                    return giveawayChannel.send(messageContent);
+                })
+            .then(() =>
+                {
+                    return giveawayChannel.messages.fetch(giveaway.messageId);
+                })
+            .then(message =>
+                {
+                    let messageContent = `<@${giveaway.ownerId}>s giveaway for ${giveaway.price} has ended!`
+                    return message.edit(messageContent);
+                })
+            .then(message => resolve(message))
+            .catch(err => reject(err));
+        });
     }
 
     noWinners(giveaway)
     {
-        let giveawayChannel;
-        this.channelManager.fetch(giveaway.channelId)
-        .then(channel =>
-            {
-                giveawayChannel = channel;
-                return channel.messages.fetch(giveaway.messageId);
-            })
-        .then(message =>
-            {
-                let messageContent = `<@${giveaway.ownerId}>s giveaway for ${giveaway.price} has ended!`
-                return message.edit(messageContent);
-            })
-        .then(() =>
-            {
-                let messageContent = `There were no entries for <@${giveaway.ownerId}>s giveaway for ${giveaway.price}, so the giveaway ends without winners :cry:`;
-                return giveawayChannel.send(messageContent);
-            })
-        .then(() =>
-            {
-                return giveawayDb.remove(giveaway);
-            })
-        .then(() =>
-            {
-                return enteredUsersDb.removeAll({giveawayId: giveaway._id});
-            })
-        .catch(err => console.log(err));
+        return new Promise((resolve, reject) =>
+        {
+            let giveawayChannel;
+            this.channelManager.fetch(giveaway.channelId)
+            .then(channel =>
+                {
+                    giveawayChannel = channel;
+                    let messageContent = `There were no entries for <@${giveaway.ownerId}>s giveaway for ${giveaway.price}, so the giveaway ends without winners :cry:`;
+                    return giveawayChannel.send(messageContent);
+                })
+            .then(() =>
+                {
+                    return giveawayChannel.messages.fetch(giveaway.messageId);
+                })
+            .then(message =>
+                {
+                    let messageContent = `<@${giveaway.ownerId}>s giveaway for ${giveaway.price} has ended!`
+                    return message.edit(messageContent);
+                })
+            .then(message => resolve(message))
+            .catch(err => reject(err));
+        });
     }
 
     enter(giveaway, user)
