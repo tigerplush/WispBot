@@ -94,7 +94,7 @@ module.exports =
                 const giveawayEndMoment = moment(giveaway.endingTime);
                 const giveawayEndGMT = giveawayEndMoment.format("MMMM Do, h:mm:ss a");
                 const giveawayEndCST = giveawayEndMoment.utcOffset(-6).format("MMMM Do, h:mm:ss a");
-                messageContent = `<@${giveaway.ownerId}> is giving away ${giveaway.price}! ${giveaway.winners} can win this prize!`;
+                let messageContent = `<@${giveaway.ownerId}> is giving away ${giveaway.price}! ${giveaway.winners} can win this prize!`;
                 messageContent += `\nThis giveaway is running until ${giveawayEndGMT} GMT (${giveawayEndCST} CST)`;
                 messageContent += `\nReact with ${emoji} to enter the giveaway`;
                 return message.channel.send(messageContent);
