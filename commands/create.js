@@ -98,6 +98,10 @@ module.exports =
         .then(giveawayMessage =>
             {
                 giveaway.messageId = giveawayMessage.id;
+                return giveawayMessage.pin();
+            })
+        .then(giveawayMessage =>
+            {
                 return giveawayMessage.react(emoji);
             })
         .then(() =>
