@@ -20,6 +20,10 @@ class Giveaway
                         {
                             this.award(giveaway);
                         }
+                        else
+                        {
+                            this.update(giveaway);
+                        }
                     });
             })
         .catch(err => console.log(err));
@@ -145,6 +149,22 @@ class Giveaway
                     userId: user.id
                 };
                 return enteredUsersDb.remove(giveawayEntree);
+            })
+        .catch(err => console.log(err));
+    }
+
+    update(giveaway)
+    {
+        this.channelManager.fetch(giveaway.channelId)
+        .then(channel =>
+            {
+                return channel.messages.fetch(giveaway.messageId);
+            })
+        .then(message =>
+            {
+                const emoji = message.reactions.cache.first().emoji;
+                const messageContent = Giveaway.ToMessage(giveaway, emoji);
+                return message.edit(messageContent);
             })
         .catch(err => console.log(err));
     }
