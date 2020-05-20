@@ -1,6 +1,6 @@
 {
   "name": "wisp",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "This is an animal crossing themed giveaway bot",
   "main": "wisp.js",
   "scripts": {
