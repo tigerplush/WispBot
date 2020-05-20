@@ -33,7 +33,7 @@ class Giveaway
     {
         console.log(`giving away ${JSON.stringify(giveaway)}...`);
 
-        enteredUsersDb.get()
+        enteredUsersDb.get({giveawayId: giveaway._id})
         .then(docs =>
             {
                 let winners = [];
